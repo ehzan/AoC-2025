@@ -24,7 +24,7 @@ def part2(input_file: str) -> int:
         if len(bank) > 12:
             joltage = ''
             for i in range(12):
-                max_digit = max(bank[:len(bank) - (11-i)])
+                max_digit = max(bank[:len(bank) - (11 - i)])
                 joltage += max_digit
                 bank = bank[bank.index(max_digit) + 1:]
         else:

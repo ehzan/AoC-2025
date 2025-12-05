@@ -5,8 +5,8 @@ import file_handle
 
 
 def parse_input(data: str) -> list[tuple[int, int]]:
-    ranges = [tuple(map(int, row.split('-')))
-              for row in data.split(',')]
+    ranges = [tuple(map(int, line.split('-')))
+              for line in data.split(',')]
     return ranges
 
 

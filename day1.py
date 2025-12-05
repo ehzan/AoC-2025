@@ -2,7 +2,7 @@ import file_handle
 
 
 def parse_input(data: str) -> list[tuple[str, int]]:
-    rotations = [(row[0], int(row[1:])) for row in data.splitlines()]
+    rotations = [(line[0], int(line[1:])) for line in data.splitlines()]
     return rotations
 
 
@@ -13,9 +13,9 @@ def part1(input_file: str) -> int:
     pos = 50
     zero_count = 0
     for (direction, distance) in rotations:
-        pos += distance if direction == 'R' else -distance
+        pos += (distance if direction == 'R' else -distance)
         pos %= 100
-        zero_count += pos == 0
+        zero_count += (pos == 0)
 
     return zero_count
 
@@ -30,8 +30,8 @@ def part2(input_file: str) -> int:
         pre = pos
         zero_count += distance // 100
         distance %= 100
-        pos += distance if direction == 'R' else -distance
-        zero_count += pre != 0 and not 0 < pos < 100
+        pos += (distance if direction == 'R' else -distance)
+        zero_count += (pre != 0 and not 0 < pos < 100)
         pos %= 100
 
     return zero_count
