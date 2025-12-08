@@ -38,6 +38,47 @@ def kruskal(vertices: list[Point], edges: list[tuple]) -> tuple[list[tuple], set
     return MST, clusters
 
 
+def kruskal2(vertices: list[Point], edges: list[tuple]) -> tuple[list[tuple], set]:
+
+    class UnionFind:
+        def __init__(self, n: int):
+            self.parent = list(range(n))
+            self.size = [1] * n
+
+        def find_root(self, v: int) -> int:
+            while self.parent[v] != v:
+                v = self.parent[v]
+            return v
+
+        def union(self, u: int, v: int) -> bool:
+            root_u = self.find_root(u)
+            root_v = self.find_root(v)
+            if root_u == root_v:
+                return False
+
+            self.parent[root_v] = root_u
+            self.size[root_u] += self.size[root_v]
+            self.size[root_v] = 0
+
+            return True
+
+    MST = []
+    uf = UnionFind(len(vertices))
+
+    for (u, v, dist) in edges:
+        if uf.union(u, v):
+            MST.append((u, v))
+            if uf.size[uf.find_root(u)] == len(vertices):
+                break
+
+    clusters = defaultdict(set)
+    for v in range(len(vertices)):
+        root = uf.find_root(v)
+        clusters[root].add(v)
+
+    return MST, clusters.values()
+
+
 def part1(input_file: str) -> int:
     data = file_handle.readfile(input_file).strip()
     vertices, edges = parse_input(data)
